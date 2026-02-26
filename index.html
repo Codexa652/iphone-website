@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iStore | Experience the Future</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --secondary-bg: #f5f5f7;
+            --accent: #0071e3;
+            --text: #1d1d1f;
+            --text-secondary: #86868b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .logo { font-weight: 600; font-size: 1.2rem; cursor: pointer; }
+
+        .nav-icons { display: flex; gap: 25px; align-items: center; }
+        
+        .cart-trigger { 
+            position: relative; 
+            cursor: pointer; 
+            transition: opacity 0.2s;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -8px; right: -12px;
+            background: var(--accent);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: var(--secondary-bg);
+            padding-top: 52px;
+        }
+
+        .hero h1 { font-size: 3.5rem; letter-spacing: -0.02em; }
+        .hero p { font-size: 1.5rem; color: var(--text-secondary); margin-top: 10px; }
+
+        /* --- Product Grid --- */
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--secondary-bg);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            background: #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        
+        .btn-buy {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover { background: #0077ed; }
+
+        /* --- Cart Page --- */
+        #cart-view {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid #d2d2d7;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #f5f5f7;
+        }
+
+        .cart-item img { width: 80px; margin-right: 20px; }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px 0 0 auto;
+            background: var(--accent);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="showView('shop')">iStore</div>
+        <div class="nav-icons">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="cart-trigger" onclick="showView('cart')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="shop-view">
+        <section class="hero">
+            <h1>iPhone 15 Pro</h1>
+            <p>Titanium. So strong. So light. So Pro.</p>
+        </section>
+
+        <div class="container">
+            <div class="product-grid" id="product-list">
+                </div>
+        </div>
+    </main>
+
+    <main id="cart-view" class="container">
+        <div class="cart-header">
+            <h1>Review your bag.</h1>
+            <span class="back-btn" onclick="showView('shop')">Continue Shopping</span>
+        </div>
+        
+        <div id="cart-items"></div>
+        
+        <div id="cart-summary" style="text-align: right; margin-top: 20px;">
+            <p style="color: var(--text-secondary)">Total</p>
+            <h2 id="total-price">$0.00</h2>
+            <a href="#" class="checkout-btn">Check Out</a>
+        </div>
+    </main>
+
+    <script>
+        const products = [
+            { id: 1, name: "iPhone 15 Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-black-titanium-select?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692875148528" },
+            { id: 2, name: "iPhone 15", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692923777971" },
+            { id: 3, name: "iPhone 14", price: 699, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1661026582322" },
+            { id: 4, name: "iPhone SE", price: 429, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-se-finish-select-202207-midnight?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1655301217783" }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('pro_cart')) || [];
+
+        function renderProducts() {
+            const grid = document.getElementById('product-list');
+            grid.innerHTML = products.map(p => `
+                <div class="card">
+                    <img src="${p.img}" alt="${p.name}">
+                    <h3>${p.name}</h3>
+                    <p>From $${p.price}</p>
+                    <button class="btn-buy" onclick="addToCart(${p.id})">Buy Now</button>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            cart.push({...item, cartId: Date.now()});
+            updateUI();
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateUI();
+        }
+
+        function updateUI() {
+            localStorage.setItem('pro_cart', JSON.stringify(cart));
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            const cartItems = document.getElementById('cart-items');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            
+            if(cart.length === 0) {
+                cartItems.innerHTML = `<h3 style="text-align:center; padding: 50px; color: var(--text-secondary);">Your bag is empty.</h3>`;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.img}">
+                        <div style="flex:1">
+                            <h3>${item.name}</h3>
+                            <p style="color: var(--accent); cursor:pointer" onclick="removeFromCart(${item.cartId})">Remove</p>
+                        </div>
+                        <h3>$${item.price}</h3>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('total-price').innerText = `$${total}`;
+        }
+
+        function showView(view) {
+            if(view === 'shop') {
+                document.getElementById('shop-view').style.display = 'block';
+                document.getElementById('cart-view').style.display = 'none';
+                window.scrollTo(0,0);
+            } else {
+                document.getElementById('shop-view').style.display = 'none';
+                document.getElementById('cart-view').style.display = 'block';
+                updateUI();
+            }
+        }
+
+        // Initial Launch
+        renderProducts();
+        updateUI();
+    </script>
+</body>
+</html>
