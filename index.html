@@ -158,23 +158,23 @@
     <script>
         const products = [
             // iPhones
-            { id: 1, cat: "iPhone", name: "iPhone 15 Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-black-titanium-select?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692875148528" },
-            { id: 2, cat: "iPhone", name: "iPhone 15", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692923777971" },
-            { id: 3, cat: "iPhone", name: "iPhone 14", price: 699, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1661026582322" },
-            { id: 4, cat: "iPhone", name: "iPhone SE", price: 429, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-se-finish-select-202207-midnight?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1655301217783" },
+            { id: 1, cat: "iPhone", name: "iPhone 15 Pro", price: 999, img: "iphone15pro.png" },
+            { id: 2, cat: "iPhone", name: "iPhone 15", price: 799, img: "iphone15.png" },
+            { id: 3, cat: "iPhone", name: "iPhone 14", price: 699, img: "iphone14.png" },
+            { id: 4, cat: "iPhone", name: "iPhone SE", price: 429, img: "iphonese.png" },
             // Macs
-            { id: 5, cat: "Mac", name: "MacBook Air M3", price: 1099, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-m3-midnight-select-202403?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1707847683711" },
-            { id: 6, cat: "Mac", name: "MacBook Pro 14\"", price: 1599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697311054290" },
-            { id: 7, cat: "Mac", name: "iMac 24\"", price: 1299, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/imac-24-blue-selection-hero-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697303965909" },
-            { id: 8, cat: "Mac", name: "Mac Mini", price: 599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-mini-hero-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1670038314708" },
+            { id: 5, cat: "Mac", name: "MacBook Air M3", price: 1099, img: "macairm3.png" },
+            { id: 6, cat: "Mac", name: "MacBook Pro 14\"", price: 1599, img: "macpro14.png" },
+            { id: 7, cat: "Mac", name: "iMac 24\"", price: 1299, img: "imac24.png" },
+            { id: 8, cat: "Mac", name: "Mac Mini", price: 599, img: "macmini.png" },
             // iPads
-            { id: 9, cat: "iPad", name: "iPad Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-finish-select-202212-11inch-spacegray-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1664415034633" },
-            { id: 10, cat: "iPad", name: "iPad Air", price: 599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-air-finish-select-202203-blue-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1645065732688" },
-            { id: 11, cat: "iPad", name: "iPad Mini", price: 499, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-mini-finish-select-202109-purple-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1629848736000" },
+            { id: 9, cat: "iPad", name: "iPad Pro", price: 999, img: "ipadpro.png" },
+            { id: 10, cat: "iPad", name: "iPad Air", price: 599, img: "ipadair.png" },
+            { id: 11, cat: "iPad", name: "iPad Mini", price: 499, img: "ipadmini.png" },
             // Watches
-            { id: 12, cat: "Watch", name: "Apple Watch Ultra 2", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTUV3_VW_34FR+watch-49-ultra2-titanium_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
-            { id: 13, cat: "Watch", name: "Watch Series 9", price: 399, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT9G3ref_VW_34FR+watch-45-alum-midnight-cell-s9_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
-            { id: 14, cat: "Watch", name: "Watch SE", price: 249, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT233_VW_34FR+watch-40-alum-starlight-nc-se_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
+            { id: 12, cat: "Watch", name: "Apple Watch Ultra 2", price: 799, img: "applewatchultra2.png" },
+            { id: 13, cat: "Watch", name: "Watch Series 9", price: 399, img: "watch9series.png" },
+            { id: 14, cat: "Watch", name: "Watch SE", price: 249, img: "watchse.png" },
             // Audio
             { id: 15, cat: "Audio", name: "AirPods Pro 2", price: 249, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985" },
             { id: 16, cat: "Audio", name: "AirPods Max", price: 549, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-max-select-silver-202011?wid=470&hei=556&fmt=png-alpha&.v=1604021221000" },
