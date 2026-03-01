@@ -3,275 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iStore | The Next Generation</title>
+    <title>iStore | The Complete Ecosystem</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --apple-white: #ffffff;
             --apple-bg: #f5f5f7;
             --apple-blue: #0071e3;
             --apple-dark: #1d1d1f;
             --apple-gray: #86868b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-        body { background: var(--apple-white); color: var(--apple-dark); overflow-x: hidden; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
+        body { background: #fff; color: var(--apple-dark); scroll-behavior: smooth; }
 
         /* --- NAVIGATION --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 48px;
+            position: fixed; top: 0; width: 100%; height: 50px;
             background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 10%; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 0 5%; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-        .logo { font-weight: 700; font-size: 1.1rem; cursor: pointer; letter-spacing: -0.5px; }
-        .nav-links { display: flex; gap: 30px; font-size: 0.85rem; color: var(--apple-gray); }
-        .nav-links span:hover { color: var(--apple-dark); cursor: pointer; }
-        .cart-btn { position: relative; cursor: pointer; }
+        .logo { font-weight: 700; cursor: pointer; font-size: 1.1rem; }
+        .nav-right { display: flex; gap: 20px; align-items: center; }
+        .cart-btn { position: relative; cursor: pointer; font-size: 1.1rem; }
         #cart-count { 
-            position: absolute; top: -10px; right: -12px; 
-            background: var(--apple-dark); color: white; 
-            font-size: 10px; padding: 2px 6px; border-radius: 10px; 
+            position: absolute; top: -8px; right: -10px; 
+            background: var(--apple-blue); color: white; 
+            font-size: 9px; padding: 2px 5px; border-radius: 10px; 
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO --- */
         .hero {
-            height: 90vh; background: #000; color: white;
+            height: 60vh; background: #000; color: white;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; text-align: center; padding: 20px;
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1556656793-062ff987b50d?q=80&w=2070&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=2000&auto=format&fit=crop');
             background-size: cover; background-position: center;
         }
-        .hero h1 { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; margin-bottom: 10px; }
-        .hero p { font-size: 1.5rem; color: #a1a1a6; margin-bottom: 30px; }
-        .hero-btn { 
-            background: var(--apple-blue); color: white; padding: 12px 30px; 
-            border-radius: 30px; text-decoration: none; font-weight: 600; transition: 0.3s;
-        }
-        .hero-btn:hover { background: #0077ed; transform: scale(1.05); }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
 
-        /* --- FILTER BAR --- */
-        .filter-container {
-            display: flex; justify-content: center; gap: 15px;
-            padding: 40px 0; background: var(--apple-white);
-            position: sticky; top: 48px; z-index: 999;
+        /* --- SEARCH & FILTERS --- */
+        .controls { position: sticky; top: 50px; background: #fff; z-index: 998; border-bottom: 1px solid #eee; padding: 10px 0; }
+        .search-container { max-width: 600px; margin: 0 auto 10px; padding: 0 5%; }
+        #search-input {
+            width: 100%; padding: 10px 20px; border-radius: 12px;
+            border: 1px solid #d2d2d7; background: var(--apple-bg); outline: none;
         }
+        .filter-container {
+            display: flex; gap: 10px; padding: 5px 5%;
+            overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+        }
+        .filter-container::-webkit-scrollbar { display: none; }
         .filter-chip {
-            padding: 8px 20px; border-radius: 20px; border: 1px solid #d2d2d7;
-            cursor: pointer; font-size: 0.9rem; transition: 0.2s;
+            padding: 6px 16px; border-radius: 20px; border: 1px solid #d2d2d7;
+            cursor: pointer; font-size: 0.8rem; flex-shrink: 0; background: #fff;
         }
         .filter-chip.active { background: var(--apple-dark); color: white; border-color: var(--apple-dark); }
 
         /* --- PRODUCT GRID --- */
-        .grid-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .grid-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
         .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
         }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
         .card {
-            background: var(--apple-bg); border-radius: 20px; padding: 30px;
-            text-align: center; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--apple-bg); border-radius: 18px; padding: 20px;
+            text-align: center; transition: 0.3s; cursor: pointer;
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        .card:hover { transform: scale(1.02); background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; }
-        .card h3 { font-size: 1.3rem; margin-bottom: 5px; }
-        .card .price { color: var(--apple-gray); font-size: 0.95rem; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 10px; }
+        .card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
+        .card .price { font-size: 0.8rem; color: var(--apple-gray); margin-bottom: 10px; }
         .add-btn {
             background: var(--apple-blue); color: white; border: none;
-            padding: 10px; border-radius: 12px; cursor: pointer; font-weight: 500;
+            padding: 8px; border-radius: 10px; font-weight: 600; font-size: 0.75rem; cursor: pointer;
         }
 
         /* --- CART VIEW --- */
-        #cart-view { display: none; padding: 100px 10% 50px; min-height: 100vh; }
-        .cart-item {
-            display: flex; align-items: center; gap: 20px;
-            padding: 25px 0; border-bottom: 1px solid #d2d2d7;
-        }
-        .cart-item img { width: 100px; height: 100px; object-fit: contain; background: #f5f5f7; border-radius: 10px; }
-        .cart-info { flex: 1; }
-        .remove-link { color: #ff3b30; cursor: pointer; font-size: 0.85rem; margin-top: 5px; display: inline-block; }
-        .checkout-bar {
-            margin-top: 40px; background: var(--apple-bg); padding: 30px;
-            border-radius: 20px; text-align: right;
-        }
+        #cart-view { display: none; padding: 80px 5% 40px; min-height: 100vh; }
+        .cart-item { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .cart-item img { width: 60px; height: 60px; object-fit: contain; }
+        .checkout-box { margin-top: 30px; padding: 25px; background: var(--apple-bg); border-radius: 20px; }
+        .payment-icons { display: flex; gap: 10px; margin-top: 15px; font-size: 1.5rem; color: #555; }
 
-        /* --- FOOTER --- */
-        footer { background: var(--apple-bg); padding: 60px 10%; color: var(--apple-gray); font-size: 0.8rem; line-height: 1.6; }
-        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px; }
-        .footer-col h4 { color: var(--apple-dark); margin-bottom: 15px; }
+        footer { background: var(--apple-bg); padding: 40px 5%; text-align: center; font-size: 0.7rem; color: var(--apple-gray); }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="togglePage('shop')"> iStore</div>
-        <div class="nav-links">
-            <span onclick="filterProducts('All')">Store</span>
-            <span onclick="filterProducts('iPhone')">iPhone</span>
-            <span onclick="filterProducts('Mac')">Mac</span>
-            <span onclick="filterProducts('Watch')">Watch</span>
-        </div>
-        <div class="cart-btn" onclick="togglePage('cart')">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <span id="cart-count">0</span>
+        <div class="logo" onclick="showPage('shop')"> iStore</div>
+        <div class="nav-right">
+            <div class="cart-btn" onclick="showPage('cart')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
         </div>
     </nav>
 
     <main id="shop-view">
         <section class="hero">
-            <h1>iPhone 15 Pro</h1>
-            <p>Titanium. So strong. So light. So Pro.</p>
-            <a href="#grid" class="hero-btn">Shop Now</a>
+            <h1>Elevate Your Every Day.</h1>
+            <p>Experience the full lineup of Apple innovation.</p>
         </section>
 
-        <div class="filter-container" id="grid">
-            <div class="filter-chip active" onclick="filterProducts('All', this)">All Products</div>
-            <div class="filter-chip" onclick="filterProducts('iPhone', this)">iPhone</div>
-            <div class="filter-chip" onclick="filterProducts('Mac', this)">Mac</div>
-            <div class="filter-chip" onclick="filterProducts('Watch', this)">Watch</div>
-            <div class="filter-chip" onclick="filterProducts('Audio', this)">Audio</div>
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for products..." oninput="handleSearch()">
+            </div>
+            <div class="filter-container">
+                <div class="filter-chip active" onclick="filterBy('All', this)">All</div>
+                <div class="filter-chip" onclick="filterBy('iPhone', this)">iPhone</div>
+                <div class="filter-chip" onclick="filterBy('Mac', this)">Mac</div>
+                <div class="filter-chip" onclick="filterBy('iPad', this)">iPad</div>
+                <div class="filter-chip" onclick="filterBy('Watch', this)">Watch</div>
+                <div class="filter-chip" onclick="filterBy('Audio', this)">Audio</div>
+                <div class="filter-chip" onclick="filterBy('Accessories', this)">Accessories</div>
+            </div>
         </div>
 
         <div class="grid-container">
-            <div class="product-grid" id="product-container">
-                </div>
+            <div class="product-grid" id="product-list"></div>
         </div>
     </main>
 
     <main id="cart-view">
-        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Review your bag.</h1>
-        <p style="margin-bottom: 40px;">Free shipping and free returns on all orders.</p>
-        
-        <div id="cart-items-list"></div>
-        
-        <div class="checkout-bar">
-            <p>Subtotal: <span id="subtotal-val">$0</span></p>
-            <p>Shipping: <span>FREE</span></p>
-            <h2 style="margin: 15px 0; font-size: 2rem;">Total: <span id="total-val">$0</span></h2>
-            <button class="hero-btn" style="width: 100%; max-width: 300px; border:none; cursor:pointer">Check Out</button>
-            <br><br>
-            <span style="color: var(--apple-blue); cursor: pointer;" onclick="togglePage('shop')">← Back to shopping</span>
+        <h1 style="font-size: 2rem; margin-bottom: 20px;">Review your bag.</h1>
+        <div id="cart-items"></div>
+        <div class="checkout-box">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>Subtotal</span>
+                <b id="total-val">$0</b>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px; color: green;">
+                <span>Shipping</span>
+                <b>FREE</b>
+            </div>
+            <button class="add-btn" style="width:100%; padding:15px; font-size:1rem;">Check Out</button>
+            <div class="payment-icons">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-apple-pay"></i>
+            </div>
+            <p onclick="showPage('shop')" style="text-align:center; color:var(--apple-blue); margin-top:20px; cursor:pointer; font-size: 0.9rem;">Continue Shopping</p>
         </div>
     </main>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>Shop and Learn</h4>
-                <p>Store<br>Mac<br>iPad<br>iPhone<br>Watch</p>
-            </div>
-            <div class="footer-col">
-                <h4>Apple Wallet</h4>
-                <p>Wallet<br>Apple Pay<br>Apple Card</p>
-            </div>
-            <div class="footer-col">
-                <h4>Account</h4>
-                <p>Manage Your Apple ID<br>Apple Store Account<br>iCloud.com</p>
-            </div>
-            <div class="footer-col">
-                <h4>Entertainment</h4>
-                <p>Apple One<br>Apple TV+<br>Apple Music<br>Apple Arcade</p>
-            </div>
-        </div>
-        <hr style="border: 0; border-top: 1px solid #d2d2d7; margin-bottom: 20px;">
-        <p>Copyright © 2024 Apple Inc. All rights reserved. Privacy Policy | Terms of Use | Sales and Refunds</p>
+        <p>© 2026 iStore Global. All rights reserved.</p>
     </footer>
 
     <script>
         const products = [
-            { id: 1, category: "iPhone", name: "iPhone 15 Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-black-titanium-select?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692875148528" },
-            { id: 2, category: "iPhone", name: "iPhone 15", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692923777971" },
-            { id: 3, category: "Mac", name: "MacBook Air M3", price: 1099, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-m3-midnight-select-202403?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1707847683711" },
-            { id: 4, category: "Mac", name: "MacBook Pro 14\"", price: 1599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697311054290" },
-            { id: 5, category: "Watch", name: "Apple Watch Ultra 2", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTUV3_VW_34FR+watch-49-ultra2-titanium_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235,1705359146522" },
-            { id: 6, category: "Audio", name: "AirPods Pro 2", price: 249, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985" },
-            { id: 7, category: "iPhone", name: "iPhone 14", price: 699, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1661026582322" },
-            { id: 8, category: "Mac", name: "iMac 24\"", price: 1299, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/imac-24-blue-selection-hero-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697303965909" },
-            { id: 9, category: "Watch", name: "Apple Watch Series 9", price: 399, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT9G3ref_VW_34FR+watch-45-alum-midnight-cell-s9_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235,1694507912440" },
-            { id: 10, category: "Audio", name: "AirPods Max", price: 549, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-max-select-silver-202011?wid=470&hei=556&fmt=png-alpha&.v=1604021221000" },
-            { id: 11, category: "iPhone", name: "iPhone SE", price: 429, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-se-finish-select-202207-midnight?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1655301217783" },
-            { id: 12, category: "Mac", name: "Mac Mini M2", price: 599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-mini-hero-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1670038314708" }
+            // iPhones
+            { id: 1, cat: "iPhone", name: "iPhone 15 Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-black-titanium-select?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692875148528" },
+            { id: 2, cat: "iPhone", name: "iPhone 15", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1692923777971" },
+            { id: 3, cat: "iPhone", name: "iPhone 14", price: 699, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1661026582322" },
+            { id: 4, cat: "iPhone", name: "iPhone SE", price: 429, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-se-finish-select-202207-midnight?wid=432&hei=432&fmt=jpeg&qlt=95&.v=1655301217783" },
+            // Macs
+            { id: 5, cat: "Mac", name: "MacBook Air M3", price: 1099, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-m3-midnight-select-202403?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1707847683711" },
+            { id: 6, cat: "Mac", name: "MacBook Pro 14\"", price: 1599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697311054290" },
+            { id: 7, cat: "Mac", name: "iMac 24\"", price: 1299, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/imac-24-blue-selection-hero-202310?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1697303965909" },
+            { id: 8, cat: "Mac", name: "Mac Mini", price: 599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mac-mini-hero-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1670038314708" },
+            // iPads
+            { id: 9, cat: "iPad", name: "iPad Pro", price: 999, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-finish-select-202212-11inch-spacegray-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1664415034633" },
+            { id: 10, cat: "iPad", name: "iPad Air", price: 599, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-air-finish-select-202203-blue-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1645065732688" },
+            { id: 11, cat: "iPad", name: "iPad Mini", price: 499, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-mini-finish-select-202109-purple-wificell?wid=432&hei=432&fmt=p-jpg&qlt=95&.v=1629848736000" },
+            // Watches
+            { id: 12, cat: "Watch", name: "Apple Watch Ultra 2", price: 799, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTUV3_VW_34FR+watch-49-ultra2-titanium_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
+            { id: 13, cat: "Watch", name: "Watch Series 9", price: 399, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT9G3ref_VW_34FR+watch-45-alum-midnight-cell-s9_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
+            { id: 14, cat: "Watch", name: "Watch SE", price: 249, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT233_VW_34FR+watch-40-alum-starlight-nc-se_VW_34FR_WF_CO?wid=375&hei=356&trim=1&fmt=p-jpg&qlt=95&.v=1694501173235" },
+            // Audio
+            { id: 15, cat: "Audio", name: "AirPods Pro 2", price: 249, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MTJV3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1694014871985" },
+            { id: 16, cat: "Audio", name: "AirPods Max", price: 549, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-max-select-silver-202011?wid=470&hei=556&fmt=png-alpha&.v=1604021221000" },
+            { id: 17, cat: "Audio", name: "HomePod Mini", price: 99, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/homepod-mini-select-blue-202110?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1632924312000" },
+            // Accessories
+            { id: 18, cat: "Accessories", name: "MagSafe Charger", price: 39, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MHXH3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1661269384584" },
+            { id: 19, cat: "Accessories", name: "Apple Pencil Pro", price: 129, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MX2D3?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1713841707336" },
+            { id: 20, cat: "Accessories", name: "AirTag 4 Pack", price: 99, img: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MX542?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1617761788000" }
         ];
 
-        let cart = JSON.parse(localStorage.getItem('istore_pro_v3')) || [];
+        let cart = [];
+        let currentFilter = 'All';
 
-        function renderProducts(filter = "All") {
-            const container = document.getElementById('product-container');
-            const filtered = filter === "All" ? products : products.filter(p => p.category === filter);
-            
-            container.innerHTML = filtered.map(p => `
+        function render(list = products) {
+            const container = document.getElementById('product-list');
+            container.innerHTML = list.map(p => `
                 <div class="card">
-                    <img src="${p.img}" alt="${p.name}">
-                    <div>
-                        <h3>${p.name}</h3>
-                        <p class="price">$${p.price}</p>
-                    </div>
+                    <img src="${p.img}">
+                    <h3>${p.name}</h3>
+                    <p class="price">$${p.price}</p>
                     <button class="add-btn" onclick="addToCart(${p.id})">Add to Bag</button>
                 </div>
             `).join('');
         }
 
-        function filterProducts(cat, el) {
-            renderProducts(cat);
-            if(el) {
-                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                el.classList.add('active');
-            }
+        function filterBy(cat, el) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            handleSearch();
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = products.filter(p => {
+                const matchesCat = currentFilter === 'All' || p.cat === currentFilter;
+                const matchesSearch = p.name.toLowerCase().includes(query);
+                return matchesCat && matchesSearch;
+            });
+            render(filtered);
         }
 
         function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            cart.push({...product, cartId: Date.now()});
-            updateUI();
-        }
-
-        function removeFromCart(cartId) {
-            cart = cart.filter(item => item.cartId !== cartId);
+            const p = products.find(x => x.id === id);
+            cart.push({...p, cartId: Date.now()});
             updateUI();
         }
 
         function updateUI() {
-            localStorage.setItem('istore_pro_v3', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = cart.length;
+            const itemsDiv = document.getElementById('cart-items');
+            const total = cart.reduce((s, i) => s + i.price, 0);
             
-            const list = document.getElementById('cart-items-list');
-            const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+            itemsDiv.innerHTML = cart.length ? cart.map(i => `
+                <div class="cart-item">
+                    <img src="${i.img}">
+                    <div style="flex:1"><b>${i.name}</b><br><small>$${i.price}</small></div>
+                    <i class="fa-solid fa-trash" style="color:red; cursor:pointer;" onclick="removeFromCart(${i.cartId})"></i>
+                </div>
+            `).join('') : '<p style="text-align:center; padding: 40px;">Your bag is empty.</p>';
             
-            if(cart.length === 0) {
-                list.innerHTML = `<h2 style="text-align:center; padding:100px; color: var(--apple-gray)">Your bag is empty.</h2>`;
-            } else {
-                list.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.img}">
-                        <div class="cart-info">
-                            <h3>${item.name}</h3>
-                            <p>${item.category}</p>
-                            <span class="remove-link" onclick="removeFromCart(${item.cartId})">Remove</span>
-                        </div>
-                        <h3>$${item.price}</h3>
-                    </div>
-                `).join('');
-            }
-            document.getElementById('subtotal-val').innerText = `$${total}`;
             document.getElementById('total-val').innerText = `$${total}`;
         }
 
-        function togglePage(view) {
-            if(view === 'shop') {
-                document.getElementById('shop-view').style.display = 'block';
-                document.getElementById('cart-view').style.display = 'none';
-                window.scrollTo(0,0);
-            } else {
-                document.getElementById('shop-view').style.display = 'none';
-                document.getElementById('cart-view').style.display = 'block';
-                updateUI();
-            }
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.cartId !== id);
+            updateUI();
         }
 
-        // Init
-        renderProducts();
-        updateUI();
+        function showPage(page) {
+            document.getElementById('shop-view').style.display = page === 'shop' ? 'block' : 'none';
+            document.getElementById('cart-view').style.display = page === 'cart' ? 'block' : 'none';
+            window.scrollTo(0,0);
+        }
+
+        render();
     </script>
 </body>
 </html>
