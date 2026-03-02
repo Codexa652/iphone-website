@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,85 +14,289 @@
             --apple-gray: #86868b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
-        body { background: #fff; color: var(--apple-dark); scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, sans-serif;
+        }
+
+        body {
+            background: #fff;
+            color: var(--apple-dark);
+            scroll-behavior: smooth;
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            /* Start hidden below */
+            background: rgba(29, 29, 31, 0.95);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 3000;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            /* Slide up into view */
+        }
+
+        .toast i {
+            color: #34c759;
+            /* Apple Success Green */
+        }
 
         /* --- NAVIGATION --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 50px;
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-        .logo { font-weight: 700; cursor: pointer; font-size: 1.1rem; }
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        .cart-btn { position: relative; cursor: pointer; font-size: 1.1rem; }
-        #cart-count { 
-            position: absolute; top: -8px; right: -10px; 
-            background: var(--apple-blue); color: white; 
-            font-size: 9px; padding: 2px 5px; border-radius: 10px; 
+
+        .logo {
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-btn {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--apple-blue);
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 10px;
         }
 
         /* --- HERO --- */
         .hero {
-            height: 60vh; background: #000; color: white;
-            display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; padding: 20px;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover; background-position: center;
+            height: 60vh;
+            background: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
-        .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
 
         /* --- SEARCH & FILTERS --- */
-        .controls { position: sticky; top: 50px; background: #fff; z-index: 998; border-bottom: 1px solid #eee; padding: 10px 0; }
-        .search-container { max-width: 600px; margin: 0 auto 10px; padding: 0 5%; }
+        .controls {
+            position: sticky;
+            top: 50px;
+            background: #fff;
+            z-index: 998;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 10px;
+            padding: 0 5%;
+        }
+
         #search-input {
-            width: 100%; padding: 10px 20px; border-radius: 12px;
-            border: 1px solid #d2d2d7; background: var(--apple-bg); outline: none;
+            width: 100%;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #d2d2d7;
+            background: var(--apple-bg);
+            outline: none;
         }
+
         .filter-container {
-            display: flex; gap: 10px; padding: 5px 5%;
-            overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+            display: flex;
+            gap: 10px;
+            padding: 5px 5%;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
         }
-        .filter-container::-webkit-scrollbar { display: none; }
+
+        .filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
         .filter-chip {
-            padding: 6px 16px; border-radius: 20px; border: 1px solid #d2d2d7;
-            cursor: pointer; font-size: 0.8rem; flex-shrink: 0; background: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid #d2d2d7;
+            cursor: pointer;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            background: #fff;
         }
-        .filter-chip.active { background: var(--apple-dark); color: white; border-color: var(--apple-dark); }
+
+        .filter-chip.active {
+            background: var(--apple-dark);
+            color: white;
+            border-color: var(--apple-dark);
+        }
 
         /* --- PRODUCT GRID --- */
-        .grid-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .product-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+        .grid-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
 
         .card {
-            background: var(--apple-bg); border-radius: 18px; padding: 20px;
-            text-align: center; transition: 0.3s; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: space-between;
+            background: var(--apple-bg);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 10px; }
-        .card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
-        .card .price { font-size: 0.8rem; color: var(--apple-gray); margin-bottom: 10px; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .card .price {
+            font-size: 0.8rem;
+            color: var(--apple-gray);
+            margin-bottom: 10px;
+        }
+
         .add-btn {
-            background: var(--apple-blue); color: white; border: none;
-            padding: 8px; border-radius: 10px; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+            background: var(--apple-blue);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
         }
 
         /* --- CART VIEW --- */
-        #cart-view { display: none; padding: 80px 5% 40px; min-height: 100vh; }
-        .cart-item { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #eee; align-items: center; }
-        .cart-item img { width: 60px; height: 60px; object-fit: contain; }
-        .checkout-box { margin-top: 30px; padding: 25px; background: var(--apple-bg); border-radius: 20px; }
-        .payment-icons { display: flex; gap: 10px; margin-top: 15px; font-size: 1.5rem; color: #555; }
+        #cart-view {
+            display: none;
+            padding: 80px 5% 40px;
+            min-height: 100vh;
+        }
 
-        footer { background: var(--apple-bg); padding: 40px 5%; text-align: center; font-size: 0.7rem; color: var(--apple-gray); }
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .checkout-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: var(--apple-bg);
+            border-radius: 20px;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 1.5rem;
+            color: #555;
+        }
+
+        footer {
+            background: var(--apple-bg);
+            padding: 40px 5%;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--apple-gray);
+        }
     </style>
 </head>
+
 <body>
+
+    <div id="cart-toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Added to Bag</span>
+    </div>
 
     <nav>
         <div class="logo" onclick="showPage('shop')"> iStore</div>
@@ -147,7 +352,9 @@
                 <i class="fa-brands fa-cc-mastercard"></i>
                 <i class="fa-brands fa-apple-pay"></i>
             </div>
-            <p onclick="showPage('shop')" style="text-align:center; color:var(--apple-blue); margin-top:20px; cursor:pointer; font-size: 0.9rem;">Continue Shopping</p>
+            <p onclick="showPage('shop')"
+                style="text-align:center; color:var(--apple-blue); margin-top:20px; cursor:pointer; font-size: 0.9rem;">
+                Continue Shopping</p>
         </div>
     </main>
 
@@ -219,15 +426,30 @@
 
         function addToCart(id) {
             const p = products.find(x => x.id === id);
-            cart.push({...p, cartId: Date.now()});
+            cart.push({ ...p, cartId: Date.now() });
             updateUI();
+
+            // Trigger the Notification
+            showToast();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('cart-toast');
+
+            // Add the 'show' class to slide it up
+            toast.classList.add('show');
+
+            // Remove it after 2 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
         }
 
         function updateUI() {
             document.getElementById('cart-count').innerText = cart.length;
             const itemsDiv = document.getElementById('cart-items');
             const total = cart.reduce((s, i) => s + i.price, 0);
-            
+
             itemsDiv.innerHTML = cart.length ? cart.map(i => `
                 <div class="cart-item">
                     <img src="${i.img}">
@@ -235,7 +457,7 @@
                     <i class="fa-solid fa-trash" style="color:red; cursor:pointer;" onclick="removeFromCart(${i.cartId})"></i>
                 </div>
             `).join('') : '<p style="text-align:center; padding: 40px;">Your bag is empty.</p>';
-            
+
             document.getElementById('total-val').innerText = `$${total}`;
         }
 
@@ -247,10 +469,11 @@
         function showPage(page) {
             document.getElementById('shop-view').style.display = page === 'shop' ? 'block' : 'none';
             document.getElementById('cart-view').style.display = page === 'cart' ? 'block' : 'none';
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         render();
     </script>
 </body>
+
 </html>
